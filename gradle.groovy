@@ -1,19 +1,19 @@
 
 def call(){
     
-    stage("Paso 1: Build && Test") {
+    stage("Paso 1: Construccion y test") {
         sh "gradle clean build"
     }
 
     stage("Paso 2: Sonar - Análisis Estático") {
-        sh "echo 'Análisis Estático!'"
+        sh "echo 'Ejecutando análisis estático!'"
         withSonarQubeEnv('sonarqube') {
-            sh './gradlew sonarqube sonar:sonar -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
+            sh './gradlew sonarqube -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
         }
     }
 
     stage("Paso 3: Curl Springboot Gradle sleep 20") {
-        sh "gradle bootRun&"
+        sh "gradle bootRun &"
         sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
     }
 
