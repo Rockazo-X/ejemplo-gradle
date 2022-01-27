@@ -8,7 +8,7 @@ def call(){
     stage("Paso 2: Sonar - Análisis Estático") {
         sh "echo 'Análisis Estático!'"
         withSonarQubeEnv('sonarqube') {
-            sh 'sonarqube sonar:sonar -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
+            sh './gradlew sonarqube sonar:sonar -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
         }
     }
 
@@ -24,7 +24,7 @@ def call(){
             [$class: 'MavenPackage',
                 mavenAssetList: [
                     [   classifier: '',
-                        extension: '.jar',
+                        extension: '',
                         filePath: 'build/DevOpsUsach2020-0.0.1.jar'
                     ]
                 ],

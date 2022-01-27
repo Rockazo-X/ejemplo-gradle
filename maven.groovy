@@ -16,12 +16,12 @@ def call(){
     stage("Paso 4: Sonar - Análisis Estático"){
         sh "echo 'Análisis Estático!'"
         withSonarQubeEnv('sonarqube') {
-            sh 'sonarqube sonar:sonar -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
+            sh 'mvn sonar:sonar -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build'
         }
     }
   
     stage("Paso 5: Curl Springboot Gradle sleep 20"){
-        sh "gradle bootRun&"
+        sh "java -jar DevOpsUsach2020-0.0.1.jar &"
         sh "sleep 20 && curl -X GET 'http://localhost:8081/rest/mscovid/test?msg=testing'"
     }
   
